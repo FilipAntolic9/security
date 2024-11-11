@@ -1,4 +1,3 @@
-// /routes/sqlInjection.js
 const express = require('express');
 const { Client } = require('pg');
 const router = express.Router();
@@ -29,9 +28,9 @@ router.post('/search', async (req, res) => {
         if (sqlInjectionEnabled) {
             // nesigurno
             const query = `
-                SELECT id, username, firstname, lastname, email, phone 
-                FROM accounts 
-                WHERE username = '${username}' AND password = '${code}'
+                SELECT id, username, firstname, lastname, email, phone
+                FROM accounts
+                WHERE username = '${username}' AND code = '${code}'
             `;
             const result = await client.query(query);
             results = result.rows;
@@ -44,7 +43,7 @@ router.post('/search', async (req, res) => {
                 .from('accounts')
                 .select('id, username, firstname, lastname, email, phone')
                 .eq('username', username)
-                .eq('password', code);
+                .eq('code', code);
 
             if (error) throw error;
             results = data;
