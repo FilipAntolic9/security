@@ -1,0 +1,34 @@
+// /views/sqlInjection.jade
+doctype html
+html
+  head
+    title SQL umetanje
+    link(rel="stylesheet", href="/styles.css")
+  body
+    h1 SQL umetanje
+
+    label(for="sqlInjectionToggle") Omogući ranjivost
+    input#sqlInjectionToggle(type="checkbox", name="sqlInjectionEnabled", checked=sqlInjectionEnabled, onchange="toggleSqlInjection()")
+
+    form(action="/sql-injection/search" method="POST")
+      label(for="username") Korisničko ime:
+      input#username(type="text" name="username" required)
+
+      label(for="code") Kod:
+      input#code(type="password" name="code" required)
+
+      button(type="submit") Dohvati podatke
+
+    if results
+      ul
+        each result in results
+          li= `ID: ${result.id}, Korisničko ime: ${result.username}, Ime: ${result.firstname}, Prezime: ${result.lastname}, Email: ${result.email}, Telefonski broj: ${result.phone}`
+
+    if error
+      p.error #{error}
+
+    script.
+      function toggleSqlInjection() {
+        document.forms[0].action = '/sql-injection/toggle-sql-injection';
+        document.forms[0].submit();
+      }

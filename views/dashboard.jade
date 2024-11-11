@@ -1,0 +1,11 @@
+// /views/dashboard.jade
+doctype html
+html
+  head
+    title Radna površina
+    link(rel="stylesheet", href="/styles.css")
+  body
+    h1 Uspješno ste prijavljeni, #{user}
+
+    form(action="/auth/logout" method="POST")
+      button(type="submit") Odjava

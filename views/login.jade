@@ -1,0 +1,32 @@
+// /views/login.jade
+doctype html
+html
+  head
+    title Prijava
+    link(rel="stylesheet", href="/styles.css")
+  body
+    h1 Prijava
+
+    label(for="authVulnToggle") Omogući ranjivost
+    input#authVulnToggle(type="checkbox", name="authVulnerabilityEnabled", checked=authVulnerabilityEnabled, onchange="toggleAuthVuln()")
+
+    form(action="/auth/login" method="POST")
+      label(for="username") Korisničko ime:
+      input#username(type="text" name="username" required)
+
+      label(for="password") Lozinka:
+      input#password(type="password" name="password" required)
+
+      button(type="submit") Prijava
+
+    if error
+      p.error #{error}
+
+    script.
+      function toggleAuthVuln() {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/auth/toggle-auth-vuln';
+        document.body.appendChild(form);
+        form.submit();
+      }
